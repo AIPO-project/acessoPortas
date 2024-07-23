@@ -116,6 +116,10 @@ void metodoPublisher() {
   else
     jsonDoc["erro"] = true;
 
+  jsonDoc["heap"]     = ESP.getFreeHeap();
+  jsonDoc["stack"]    = ESP.getFreeContStack();
+
+
   String payload = "";
   serializeJson(jsonDoc, payload);
 
