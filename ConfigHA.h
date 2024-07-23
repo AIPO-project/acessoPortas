@@ -15,14 +15,14 @@ class HomeAssistant{
   bool auto_discovery = true;      //default to false and provide end-user interface to allow toggling 
 
   //Variables for creating unique entity IDs and topics
-  byte macAddr[6];                  //Device MAC address
-  char uidPrefix[20] = "rctdev";      //Prefix for unique ID generation (limit to 20 chars)
-  char devUniqueID[30];             //Generated Unique ID for this device (uidPrefix + last 6 MAC characters) 
+  //byte macAddr[6];                  //Device MAC address
+  //char uidPrefix[20] = "rctdev";      //Prefix for unique ID generation (limit to 20 chars)
+  //char devUniqueID[30];             //Generated Unique ID for this device (uidPrefix + last 6 MAC characters) 
 
 
 
   public:
-
+/*
   const String getUniqueID(){
     String hexstring="";
 
@@ -56,6 +56,7 @@ class HomeAssistant{
     Serial.print("Unique ID: ");
     Serial.println(devUniqueID);
   }
+  */
 
   void haDiscovery() {
     char topic[128];
@@ -71,11 +72,11 @@ class HomeAssistant{
       strcat(topic, client.getMqttClientName());
       strcat(topic, "/config");
       //Create unique_id based on devUniqueID
-      strcpy(uid, getUniqueID().c_str());
+      //strcpy(uid, getUniqueID().c_str());
       //Create JSON payload per HA documentation
-      doc["name"] = String("Porta_") + client.getMqttClientName();
+      doc["name"] = client.getMqttClientName();
       doc["obj_id"] = "mqtt_porta";
-      doc["uniq_id"] = getUniqueID();
+      doc["uniq_id"] = client.getMqttClientName();
       doc["stat_t"] = topic_name+"/"+client.getMqttClientName();
       doc["cmd_t"] = topic_name +"/"+ client.getMqttClientName()+"/cmd";
       doc["value_template"] = "{{ value_json.state }}";
@@ -85,7 +86,7 @@ class HomeAssistant{
       device["name"] = "Trancas das Portas";
 //      device["mf"] = "lennedy";
       device["mdl"] = "ESP8266";
-      device["sw"] = "0.01";
+      device["sw"] = "0.02";
       device["hw"] = "0.01";
 //      device["cu"] = "http://192.168.1.226/config";  //web interface for device, with discovery toggle
       serializeJson(doc, buffer1);
@@ -110,11 +111,11 @@ class HomeAssistant{
   }
 
   void init(){
-    WiFi.macAddress(macAddr);
-    createDiscoveryUniqueID();
+    //WiFi.macAddress(macAddr);
+    //createDiscoveryUniqueID();
   }
 
-  
+/*  
   String getTopicName(){
       String topic_config_name;
       
@@ -126,33 +127,7 @@ class HomeAssistant{
       
       return topic_config_name;
     }
-
-    void getConfigMessage(String &message){
-      /*
-      StaticJsonDocument<300> jsonDoc;      
-
-      jsonDoc["name"] =  "MQTT teste";
-      jsonDoc["state_topic"] = topic_name;
-      jsonDoc["manufacturer"] = "IFRN_Lennedy";
-      jsonDoc["hw_version"] = "0.5";
-      jsonDoc["sw_version"] = "0.2";
-
-      serializeJson(jsonDoc, message);
-      */
-      DynamicJsonDocument doc(2048);
-      doc.clear();
-      doc["name"] =  "MQTT teste";
-      doc["state_topic"] = topic_name;
-      
-      JsonObject device = doc.createNestedObject("device");
-      device["name"] = "My MQTT Device";
-      device["ids"] = "mymqttdevice01";
-      device["mf"] = "Resinchem Tech";
-      device["mdl"] = "ESP8266";
-      device["sw"] = "1.24";
-      device["hw"] = "0.45";
-      device["cu"] = "http://192.168.1.226/config";
-    }
+*/
 };
 
 
