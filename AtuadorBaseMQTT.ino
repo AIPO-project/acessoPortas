@@ -10,9 +10,9 @@
 #include <PN532.h>
 #include <NfcAdapter.h>
 
-#define DATA_INTERVAL 10000       // Intervalo para adquirir novos dados do sensor (milisegundos).
+#define DATA_INTERVAL 30000       // Intervalo para adquirir novos dados do sensor (milisegundos).
 // Os dados serão publidados depois de serem adquiridos valores equivalentes a janela do filtro
-#define AVAILABLE_INTERVAL 5000  // Intervalo para enviar sinais de available (milisegundos)
+#define AVAILABLE_INTERVAL 50000  // Intervalo para enviar sinais de available (milisegundos)
 #define READ_SENSOR_INTERVAL 2000  // Intervalo para enviar sinais de available (milisegundos)
 #define LED_INTERVAL_MQTT 1000        // Intervalo para piscar o LED quando conectado no broker
 #define JANELA_FILTRO 1         // Número de amostras do filtro para realizar a média
@@ -48,15 +48,15 @@ void setup()
   digitalWrite(RESET_PIN, HIGH);
   delay(1000);
   
-
   nfc.begin(); //inicia o leitor de nfc/rfid
+  
 
   // Optional functionalities of EspMQTTClient
   //client.enableMQTTPersistence();
-  client.enableDebuggingMessages(); // Enable debugging messages sent to serial output
-  client.enableHTTPWebUpdater(); // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
+  //client.enableDebuggingMessages(); // Enable debugging messages sent to serial output
+  //client.enableHTTPWebUpdater(); // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
   client.enableOTA(); // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
-  client.enableLastWillMessage("cm/porta/porta_BCDDC22B1561/available", "offline");  // You can activate the retain flag by setting the third parameter to true
+  client.enableLastWillMessage(TOPIC_AVAILABLE, "offline");  // You can activate the retain flag by setting the third parameter to true
   //client.setKeepAlive(8); 
   WiFi.mode(WIFI_STA);
 }
@@ -96,7 +96,7 @@ void availableSignal() {
 
 bool readSensor() {
   
-  if (nfc.tagPresent(10)){
+  if (nfc.tagPresent(3)){
     NfcTag tag = nfc.read();
     idChave = tag.getUidString();
     return true;

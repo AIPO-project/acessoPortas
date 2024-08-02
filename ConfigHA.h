@@ -36,14 +36,14 @@ class HomeAssistant{
       doc["stat_t"] = topic_name+"/"+client.getMqttClientName();
       doc["cmd_t"] = topic_name +"/"+ client.getMqttClientName()+"/cmd";
       doc["value_template"] = "{{ value_json.state }}";
-      doc["availability"][0]["topic"] = topic_name +"/"+ client.getMqttClientName()+"/available";
+      doc["availability"][0]["topic"] = TOPIC_AVAILABLE;
       JsonObject device = doc.createNestedObject("device");
       device["ids"] = "Portas01";
       device["name"] = "Trancas das Portas";
 //      device["mf"] = "lennedy";
       device["mdl"] = "ESP8266";
       device["sw"] = "0.02";
-      device["hw"] = "0.01";
+      device["hw"] = "0.05";
 //      device["cu"] = "http://192.168.1.226/config";  //web interface for device, with discovery toggle
       serializeJson(doc, buffer1);
       //Publish discovery topic and payload (with retained flag)
