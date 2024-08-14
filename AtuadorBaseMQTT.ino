@@ -52,12 +52,12 @@ void setup()
   
 
   // Optional functionalities of EspMQTTClient
-  //client.enableMQTTPersistence();
+  client.enableMQTTPersistence();
   //client.enableDebuggingMessages(); // Enable debugging messages sent to serial output
   //client.enableHTTPWebUpdater(); // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
   client.enableOTA(); // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
   client.enableLastWillMessage(TOPIC_AVAILABLE, "offline");  // You can activate the retain flag by setting the third parameter to true
-  //client.setKeepAlive(8); 
+  client.setKeepAlive(60); 
   WiFi.mode(WIFI_STA);
 }
 
