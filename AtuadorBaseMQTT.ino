@@ -10,10 +10,10 @@
 #include <PN532.h>
 #include <NfcAdapter.h>
 
-#define DATA_INTERVAL 30000       // Intervalo para adquirir novos dados do sensor (milisegundos).
+#define DATA_INTERVAL 10*60000       // Intervalo para adquirir novos dados do sensor (milisegundos).
 // Os dados serão publidados depois de serem adquiridos valores equivalentes a janela do filtro
-#define AVAILABLE_INTERVAL 50000  // Intervalo para enviar sinais de available (milisegundos)
-#define READ_SENSOR_INTERVAL 2000  // Intervalo para enviar sinais de available (milisegundos)
+#define AVAILABLE_INTERVAL 2*60000  // Intervalo para enviar sinais de available (milisegundos)
+#define READ_SENSOR_INTERVAL 5000  // Intervalo para fazer leituras consecutivas da chave (milisegundos)
 #define LED_INTERVAL_MQTT 1000        // Intervalo para piscar o LED quando conectado no broker
 #define JANELA_FILTRO 1         // Número de amostras do filtro para realizar a média
 
@@ -170,19 +170,26 @@ void loop()
   
   client.loop();
 
-  if (time_ms - dataIntevalPrevTime >= DATA_INTERVAL) {
-    client.executeDelayed(1 * 100, metodoPublisher);
+  bool connected = client.isConnected();
+
+  if ((time_ms - dataIntevalPrevTime >= DATA_INTERVAL) && connected) {
+    //client.executeDelayed(1 * 100, metodoPublisher);
+    metodoPublisher();
     dataIntevalPrevTime = time_ms;
   }
 
-  if (time_ms - availableIntevalPrevTime >= AVAILABLE_INTERVAL) {
-    client.executeDelayed(1 * 500, availableSignal);
+  if ((time_ms - availableIntevalPrevTime >= AVAILABLE_INTERVAL) && connected){
+    //client.executeDelayed(1 * 500, availableSignal);
+    availableSignal();
     availableIntevalPrevTime = time_ms;
   }
 
-  if(readSensor() && (time_ms - sensorReadTimePrev >= READ_SENSOR_INTERVAL) ){
-    client.executeDelayed(1 * 100, sendChave);
-    sensorReadTimePrev = time_ms;
+  if((time_ms - sensorReadTimePrev >= READ_SENSOR_INTERVAL) && connected){
+    if( readSensor() ){
+      //client.executeDelayed(1 * 100, sendChave);
+      sendChave();
+      sensorReadTimePrev = time_ms;
+    }
   }
 
   blinkLed();
