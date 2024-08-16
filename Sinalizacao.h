@@ -11,6 +11,10 @@ class Sinalizacao{
   public:
   void init();
 
+  void somSucesso();
+  void somTentativa();
+  void somFracasso();
+
   inline void ligarConexao(){}
   inline void desligarConexao(){}
 

@@ -2,6 +2,7 @@
 #include <ArduinoJson.h>
 #include "ConnectDataIFRN.h"
 #include "ConfigHA.h"
+#include "Sinalizacao.h"
 
 #define NDEF_DEBUG false
 #include <Arduino.h>
