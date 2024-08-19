@@ -19,7 +19,8 @@
 
 //declaracao de objetos para uso na 
 PN532_I2C pn532_i2c(Wire);
-NfcAdapter nfc = NfcAdapter(pn532_i2c);
+PN532 nfc(pn532_i2c);
+//NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
 byte RESET_PIN = 14;
 byte ACIONAMENTO_PIN = 13;
@@ -49,6 +50,8 @@ void setup()
   delay(1000);
   
   nfc.begin(); //inicia o leitor de nfc/rfid
+
+  nfc.SAMConfig();
   
 
   // Optional functionalities of EspMQTTClient
@@ -95,12 +98,18 @@ void availableSignal() {
 }
 
 bool readSensor() {
-  
+  uint8_t success;
+  uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };  // Buffer to store the returned UID
+  uint8_t uidLength;
+  /*
   if (nfc.tagPresent(3)){
     NfcTag tag = nfc.read();
     idChave = tag.getUidString();
     return true;
-  }
+  }*/
+
+  success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength);
+
   return false;
 }
 
@@ -111,10 +120,10 @@ void metodoPublisher() {
   jsonDoc["RSSI"] = WiFi.RSSI();
   jsonDoc["state"] = "LOCKED";
 
-  if( nfc.isInitiated())
-    jsonDoc["erro"] = false;
-  else
-    jsonDoc["erro"] = true;
+//  if( nfc.isInitiated())
+//    jsonDoc["erro"] = false;
+//  else
+//    jsonDoc["erro"] = true;
 
   jsonDoc["heap"]     = ESP.getFreeHeap();
   jsonDoc["stack"]    = ESP.getFreeContStack();
