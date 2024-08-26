@@ -45,29 +45,9 @@ void setup()
   pinMode(BLINK_PIN, OUTPUT);
   pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
 //  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
-//  pinMode(RESET_PIN, OUTPUT);
+  pinMode(RESET_PIN, OUTPUT);
 
-//  digitalWrite(RESET_PIN, LOW);
-//  delay(1000);
-//  digitalWrite(RESET_PIN, HIGH);
-//  delay(1000);
-
-  Serial.println("Antes do begin");
-
-  nfc.begin(); //inicia o leitor de nfc/rfid
-
-  Serial.println("Depois do begin");
-
-  uint32_t versiondata = nfc.getFirmwareVersion();
-  if (! versiondata) {
-    Serial.println("Didn't find PN53x board");
-    pn532Fail=true;
-  }
-  else{
-    nfc.SAMConfig();
-    pn532Fail=false;
-    Serial.println(versiondata);
-  }
+  iniciarPN532();
 
   // Optional functionalities of EspMQTTClient
   //client.enableMQTTPersistence();
@@ -77,6 +57,33 @@ void setup()
   client.enableLastWillMessage(TOPIC_AVAILABLE, "offline");  // You can activate the retain flag by setting the third parameter to true
   //client.setKeepAlive(60); 
   WiFi.mode(WIFI_STA);
+}
+
+void resetPN532(){
+  //Trecho de codigo para resetar o PN532
+  digitalWrite(RESET_PIN, LOW);
+  delay(100);
+  digitalWrite(RESET_PIN, HIGH);
+  delay(100);
+}
+
+void iniciarPN532(){
+
+  resetPN532();
+  nfc.begin(); //inicia o leitor de nfc/rfid
+
+  uint32_t versiondata = nfc.getFirmwareVersion();
+  if ( !versiondata ) {
+    pn532Fail=true;
+
+    Serial.println("Didn't find PN53x board");    
+  }
+  else{
+    nfc.SAMConfig();
+    pn532Fail=false;
+
+    Serial.println(versiondata);
+  }
 }
 
 void atuador(const String payload) {
@@ -116,12 +123,6 @@ bool readSensor() {
   uint8_t success;
   uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };  // Buffer to store the returned UID
   uint8_t uidLength;
-  /*
-  if (nfc.tagPresent(3)){
-    NfcTag tag = nfc.read();
-    idChave = tag.getUidString();
-    return true;
-  }*/
 
   uint32_t versiondata = nfc.getFirmwareVersion();
   if (! versiondata) {
@@ -131,6 +132,7 @@ bool readSensor() {
 
   if(pn532Fail){
     //Serial.println("Erro");
+    iniciarPN532();
     return false;
   }
 
@@ -235,8 +237,8 @@ void loop()
     availableIntevalPrevTime = time_ms;
   }
 
-  if((time_ms - sensorReadTimePrev >= READ_SENSOR_INTERVAL) && connected){
-    if( readSensor() ){
+  if((time_ms - sensorReadTimePrev >= READ_SENSOR_INTERVAL)){
+    if( readSensor() && connected){
       //client.executeDelayed(1 * 100, sendChave);
       sendChave();
       sensorReadTimePrev = time_ms;
