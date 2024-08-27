@@ -23,7 +23,7 @@ PN532 nfc = PN532(pn532_i2c);
 //PN532 nfc(pn532_i2c);
 //NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
-byte RESET_PIN = 14;
+byte RESET_PIN = 2;
 byte ACIONAMENTO_PIN = 13;
 byte BUZZER_PIN = 12;
 byte BLINK_PIN = LED_BUILTIN;
