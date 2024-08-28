@@ -23,7 +23,7 @@ PN532 nfc = PN532(pn532_i2c);
 //PN532 nfc(pn532_i2c);
 //NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
-byte RESET_PIN = 2;
+byte RESET_PIN = 0;
 byte ACIONAMENTO_PIN = 13;
 byte BUZZER_PIN = 12;
 byte BLINK_PIN = LED_BUILTIN;
@@ -64,7 +64,6 @@ void resetPN532(){
   digitalWrite(RESET_PIN, LOW);
   delay(100);
   digitalWrite(RESET_PIN, HIGH);
-  delay(100);
 }
 
 void iniciarPN532(){
@@ -128,11 +127,11 @@ bool readSensor() {
   if (! versiondata) {
     //Serial.println("Didn't find PN53x board");
     pn532Fail=true;
+    iniciarPN532();
   }
 
   if(pn532Fail){
     //Serial.println("Erro");
-    iniciarPN532();
     return false;
   }
 
