@@ -1,15 +1,21 @@
 #ifndef SINALIZACAO_H
 #define SINALIZACAO_H
 
-#define PIN_CONEXAO  1  //valor aleatorio para pino de conexão somente para exemplificar 
-#define PIN_VERMELHO 2  //valor aleatorio para pino de conexão somente para exemplificar 
+#include <Arduino.h>
+#include <EspMQTTClient.h>
+#include "Connect.h"
+
+#define PIN_CONEXAO  2  //valor aleatorio para pino de conexão somente para exemplificar 
+#define PIN_VERMELHO 1  //valor aleatorio para pino de conexão somente para exemplificar 
 #define PIN_AZUL     3  //valor aleatorio para pino de conexão somente para exemplificar 
 #define PIN_VERDE    5  //valor aleatorio para pino de conexão somente para exemplificar 
+
+#define LED_INTERVAL_MQTT 1000        // Intervalo para piscar o LED quando conectado no broker
 
 class Sinalizacao{
 
   public:
-  void init();
+  void iniciar();
 
   void somSucesso();
   void somTentativa();
@@ -20,6 +26,8 @@ class Sinalizacao{
 
   inline void ligarVerde(){}
   inline void desligarVerde(){}
+
+  void ledConexao();
 
 };
 
