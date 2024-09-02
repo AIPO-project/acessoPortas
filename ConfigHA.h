@@ -6,57 +6,13 @@
 #include "ConnectDataIFRN.h"
 #include <ArduinoJson.h>
 
-
-//String topic_config_name = "homeassistant/sensor"+topic_name+"/config";
-
 class HomeAssistant{
   private:
 
   bool auto_discovery = true;      //default to false and provide end-user interface to allow toggling 
 
-  //Variables for creating unique entity IDs and topics
-  //byte macAddr[6];                  //Device MAC address
-  //char uidPrefix[20] = "rctdev";      //Prefix for unique ID generation (limit to 20 chars)
-  //char devUniqueID[30];             //Generated Unique ID for this device (uidPrefix + last 6 MAC characters) 
-
-
 
   public:
-/*
-  const String getUniqueID(){
-    String hexstring="";
-
-    for(int i = 0; i < 3; i++) {
-
-      if(macAddr[i] < 0x10) {
-        hexstring += '0';
-      }
-      hexstring += String(macAddr[i], HEX);
-    
-    }
-    
-    return "porta_"+hexstring;
-  }
-  
-
-  void createDiscoveryUniqueID() {
-    //Generate UniqueID from uidPrefix + last 6 chars of device MAC address
-    //This should insure that even multiple devices installed in same HA instance are unique
-    
-    strcpy(devUniqueID, uidPrefix);
-    int preSizeBytes = sizeof(uidPrefix);
-    int preSizeElements = (sizeof(uidPrefix) / sizeof(uidPrefix[0]));
-    //Now add last 6 chars from MAC address (these are 'reversed' in the array)
-    int j = 0;
-    for (int i = 2; i >= 0; i--) {
-      sprintf(&devUniqueID[(preSizeBytes - 1) + (j)], "%02X", macAddr[i]);   //preSizeBytes indicates num of bytes in prefix - null terminator, plus 2 (j) bytes for each hex segment of MAC
-      j = j + 2;
-    }
-    // End result is a unique ID for this device (e.g. rctdevE350CA) 
-    Serial.print("Unique ID: ");
-    Serial.println(devUniqueID);
-  }
-  */
 
   void haDiscovery() {
     char topic[128];
@@ -80,14 +36,14 @@ class HomeAssistant{
       doc["stat_t"] = topic_name+"/"+client.getMqttClientName();
       doc["cmd_t"] = topic_name +"/"+ client.getMqttClientName()+"/cmd";
       doc["value_template"] = "{{ value_json.state }}";
-      doc["availability"][0]["topic"] = topic_name +"/"+ client.getMqttClientName()+"/available";
+      doc["availability"][0]["topic"] = TOPIC_AVAILABLE;
       JsonObject device = doc.createNestedObject("device");
-      device["ids"] = "Portas01";
+      device["ids"] = client.getMqttClientName();
       device["name"] = "Trancas das Portas";
 //      device["mf"] = "lennedy";
       device["mdl"] = "ESP8266";
-      device["sw"] = "0.02";
-      device["hw"] = "0.01";
+      device["sw"] = "0.06_pn532Test-01";
+      device["hw"] = "0.1";
 //      device["cu"] = "http://192.168.1.226/config";  //web interface for device, with discovery toggle
       serializeJson(doc, buffer1);
       //Publish discovery topic and payload (with retained flag)
@@ -111,23 +67,8 @@ class HomeAssistant{
   }
 
   void init(){
-    //WiFi.macAddress(macAddr);
-    //createDiscoveryUniqueID();
   }
 
-/*  
-  String getTopicName(){
-      String topic_config_name;
-      
-      topic_config_name = "homeassistant/sensor";
-//      topic_config_name += "MAC_";
-//      topic_config_name += WiFi.macAddress();
-      topic_config_name += "/teste";
-      topic_config_name += "/config";
-      
-      return topic_config_name;
-    }
-*/
 };
 
 
