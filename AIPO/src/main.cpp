@@ -1,6 +1,6 @@
 #include "EspMQTTClient.h"
 #include <ArduinoJson.h>
-#include "ConnectDataIFRN.h"
+#include "Connect.h"
 #include "ConfigHA.h"
 #include "Sinalizacao.h"
 
@@ -35,30 +35,8 @@ unsigned long availableIntevalPrevTime = 0; // will store last time "available" 
 unsigned long sensorReadTimePrev = 0;        // irá amazenar a última vez que o sensor for lido
 
 String idChave;
-HomeAssistant HA;  //trata da configuuração dos dispositivos no home assistant
+ConfigHA HA;  //trata da configuuração dos dispositivos no home assistant
 bool pn532Fail=true;
-
-void setup()
-{
-  Serial.begin(115200);
-  Serial.println("what the hell");
-
-  pinMode(BLINK_PIN, OUTPUT);
-  pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
-//  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
-  pinMode(RESET_PIN, OUTPUT);
-
-  iniciarPN532();
-
-  // Optional functionalities of EspMQTTClient
-  //client.enableMQTTPersistence();
-  client.enableDebuggingMessages(); // Enable debugging messages sent to serial output
-  //client.enableHTTPWebUpdater(); // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
-  client.enableOTA(); // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
-  client.enableLastWillMessage(TOPIC_AVAILABLE, "offline");  // You can activate the retain flag by setting the third parameter to true
-  //client.setKeepAlive(60); 
-  WiFi.mode(WIFI_STA);
-}
 
 void resetPN532(){
   //Trecho de codigo para resetar o PN532
@@ -86,6 +64,28 @@ void iniciarPN532(){
   }
 }
 
+void setup()
+{
+  Serial.begin(115200);
+  Serial.println("what the hell");
+
+  pinMode(BLINK_PIN, OUTPUT);
+  pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
+//  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
+  pinMode(RESET_PIN, OUTPUT);
+
+  iniciarPN532();
+
+  // Optional functionalities of EspMQTTClient
+  //client.enableMQTTPersistence();
+  client.enableDebuggingMessages(); // Enable debugging messages sent to serial output
+  //client.enableHTTPWebUpdater(); // Enable the web updater. User and password default to values of MQTTUsername and MQTTPassword. These can be overridded with enableHTTPWebUpdater("user", "password").
+  client.enableOTA(); // Enable OTA (Over The Air) updates. Password defaults to MQTTPassword. Port is the default OTA port. Can be overridden with enableOTA("password", port).
+  client.enableLastWillMessage(TOPIC_AVAILABLE, "offline");  // You can activate the retain flag by setting the third parameter to true
+  //client.setKeepAlive(60); 
+  WiFi.mode(WIFI_STA);
+}
+
 void atuador(const String payload) {
 
   if(payload == "UNLOCK"){
@@ -104,19 +104,19 @@ void atuador(const String payload) {
 
 }
 
+void availableSignal() {
+  client.publish(topic_name +"/"+ client.getMqttClientName() + "/available", "online");
+}
+
+
 void onConnectionEstablished()
 {
 
-  HA.init();
   HA.haDiscovery(); 
   client.subscribe(topic_name +"/"+ client.getMqttClientName()+"/cmd", atuador);
 
   availableSignal();
 
-}
-
-void availableSignal() {
-  client.publish(topic_name +"/"+ client.getMqttClientName() + "/available", "online");
 }
 
 bool readSensor() {
