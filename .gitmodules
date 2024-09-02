@@ -4,6 +4,6 @@
 [submodule "AIPO/lib/EspMQTTClient"]
 	path = AIPO/lib/EspMQTTClient
 	url = https://github.com/plapointe6/EspMQTTClient.git
-[submodule "AIPO/lib/PN532"]
-	path = AIPO/lib/PN532
+[submodule "AIPO/lib/PN532_"]
+	path = AIPO/lib/PN532_
 	url = https://github.com/elechouse/PN532.git
