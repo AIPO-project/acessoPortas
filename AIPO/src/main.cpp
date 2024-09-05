@@ -9,7 +9,6 @@
 #include <Wire.h>
 #include <PN532_I2C.h>
 #include <PN532.h>
-//#include <NfcAdapter.h>
 
 #define DATA_INTERVAL 20000       // Intervalo para adquirir novos dados do sensor (milisegundos).
 // Os dados serão publidados depois de serem adquiridos valores equivalentes a janela do filtro
