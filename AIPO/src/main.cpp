@@ -66,7 +66,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("what the hell");
-
+  sinal.iniciar(); 
   pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
 //  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
   pinMode(RESET_PIN, OUTPUT);

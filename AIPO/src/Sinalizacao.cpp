@@ -24,7 +24,6 @@ void Sinalizacao::ledConexao() {
   static unsigned long ledMqttPrevTime = 0;
   unsigned long time_ms = millis();
   bool ledStatus = false;
-
   if ( (WiFi.status() == WL_CONNECTED)) {
     if (client.isMqttConnected()) {
       if ( (time_ms - ledMqttPrevTime) >= LED_INTERVAL_MQTT) {
