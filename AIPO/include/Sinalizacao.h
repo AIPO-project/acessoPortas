@@ -5,10 +5,11 @@
 #include <EspMQTTClient.h>
 #include "Connect.h"
 
-#define PIN_CONEXAO  2  //valor aleatorio para pino de conexão somente para exemplificar 
-#define PIN_VERMELHO 1  //valor aleatorio para pino de conexão somente para exemplificar 
-#define PIN_AZUL     3  //valor aleatorio para pino de conexão somente para exemplificar 
-#define PIN_VERDE    5  //valor aleatorio para pino de conexão somente para exemplificar 
+#define PIN_CONEXAO  2  //valor para pino de conexão
+#define PIN_VERMELHO 12 //valor para pino de sinalização
+#define PIN_AZUL     16 //valor para pino de sinalização 
+#define PIN_VERDE    14 //valor para pino de sinalização 
+#define PIN_BUZZER   15 //valor para pino do buzzer
 
 #define LED_INTERVAL_MQTT 1000        // Intervalo para piscar o LED quando conectado no broker
 
@@ -29,6 +30,16 @@ class Sinalizacao{
 
   void ledConexao();
 
+  private:
+  void desligarLedRgb();
+
+  void ledRgbVermelho();
+  void ledRgbVerde();
+  void ledRgbAzul();
+  void ledRgbAmarelo();
+  void ledRgbMagenta();
+  void ledRgbCiano();
+  void ledRgbBranco();
 };
 
 #endif

@@ -4,8 +4,17 @@
 void Sinalizacao::iniciar(){
   //colocar aqui a inicialização dos pinos e bibliotecas da sinalização
   pinMode(PIN_CONEXAO, OUTPUT);
+  pinMode(PIN_BUZZER, OUTPUT);
+  pinMode(PIN_AZUL, OUTPUT);
+  pinMode(PIN_VERDE, OUTPUT);
+  pinMode(PIN_VERMELHO, OUTPUT);
+
 
 }
+
+// void Sinalizacao::desligarLedRgb(){
+  
+// }
 
 void Sinalizacao::somSucesso(){
   //Colocar aqui a implementação do som quando for bem sucedida a consulta
