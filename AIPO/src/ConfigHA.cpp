@@ -1,5 +1,9 @@
 #include "ConfigHA.h"
 
+void ConfigHA::iniciar(){
+    client.setMaxPacketSize(512);    
+}
+
 void ConfigHA::haDiscovery() {
   char topic[128];
   if (auto_discovery) {

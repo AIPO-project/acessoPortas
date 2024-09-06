@@ -13,6 +13,8 @@ class ConfigHA{
   
   public:
 
+  void iniciar();
+
   void haDiscovery();
 };
 

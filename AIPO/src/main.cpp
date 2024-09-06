@@ -70,7 +70,7 @@ void setup()
   pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
 //  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
   pinMode(RESET_PIN, OUTPUT);
-
+  HA.iniciar();
   iniciarPN532();
 
   // Optional functionalities of EspMQTTClient
