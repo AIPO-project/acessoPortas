@@ -18,6 +18,9 @@ class Sinalizacao{
   public:
   void iniciar();
 
+  void SinalizarAcessoPermitido();
+  void SinalizarAcessoNegado();
+
   void somSucesso();
   void somTentativa();
   void somFracasso();
@@ -33,13 +36,13 @@ class Sinalizacao{
   private:
   void desligarLedRgb();
 
-  void ledRgbVermelho();
-  void ledRgbVerde();
-  void ledRgbAzul();
-  void ledRgbAmarelo();
-  void ledRgbMagenta();
-  void ledRgbCiano();
-  void ledRgbBranco();
+  void ligarLedRgbVermelho();
+  void ligarLedRgbVerde();
+  void ligarLedRgbAzul();
+  void ligarLedRgbAmarelo();
+  void ligarLedRgbMagenta();
+  void ligarLedRgbCiano();
+  void ligarLedRgbBranco();
 };
 
 #endif

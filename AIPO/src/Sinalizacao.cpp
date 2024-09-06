@@ -9,15 +9,79 @@ void Sinalizacao::iniciar(){
   pinMode(PIN_VERDE, OUTPUT);
   pinMode(PIN_VERMELHO, OUTPUT);
 
-
+  desligarLedRgb();
 }
 
-// void Sinalizacao::desligarLedRgb(){
+void Sinalizacao::SinalizarAcessoPermitido(){
+  ligarLedRgbVerde();
+  somSucesso();
+  delay(1000);
+  desligarLedRgb();
   
-// }
+}
+
+void Sinalizacao::SinalizarAcessoNegado(){
+  ligarLedRgbVermelho();
+  somFracasso();
+  delay(1000);
+  desligarLedRgb();
+}
+ 
+void Sinalizacao::desligarLedRgb(){
+  digitalWrite(PIN_AZUL, HIGH);
+  digitalWrite(PIN_VERDE, HIGH);
+  digitalWrite(PIN_VERMELHO, HIGH);
+}
+ 
+void Sinalizacao::ligarLedRgbVerde(){
+    digitalWrite(PIN_AZUL, HIGH);
+    digitalWrite(PIN_VERDE, LOW);
+    digitalWrite(PIN_VERMELHO, HIGH);
+}
+
+void Sinalizacao::ligarLedRgbVermelho(){
+    digitalWrite(PIN_AZUL, HIGH);
+    digitalWrite(PIN_VERDE, HIGH);
+    digitalWrite(PIN_VERMELHO, LOW);
+}
+
+void Sinalizacao::ligarLedRgbAzul(){
+    digitalWrite(PIN_AZUL, LOW);
+    digitalWrite(PIN_VERDE, HIGH);
+    digitalWrite(PIN_VERMELHO, HIGH);
+}
+
+void Sinalizacao::ligarLedRgbAmarelo(){
+    digitalWrite(PIN_AZUL, HIGH);
+    digitalWrite(PIN_VERDE, LOW);
+    digitalWrite(PIN_VERMELHO, LOW);
+}
+
+void Sinalizacao::ligarLedRgbMagenta(){
+    digitalWrite(PIN_AZUL, LOW);
+    digitalWrite(PIN_VERDE, HIGH);
+    digitalWrite(PIN_VERMELHO, LOW);
+}
+
+void Sinalizacao::ligarLedRgbCiano(){
+    digitalWrite(PIN_AZUL, LOW);
+    digitalWrite(PIN_VERDE, LOW);
+    digitalWrite(PIN_VERMELHO, HIGH);
+}
+
+void Sinalizacao::ligarLedRgbBranco(){
+    digitalWrite(PIN_AZUL, LOW);
+    digitalWrite(PIN_VERDE, LOW);
+    digitalWrite(PIN_VERMELHO, LOW);
+}
 
 void Sinalizacao::somSucesso(){
-  //Colocar aqui a implementação do som quando for bem sucedida a consulta
+  tone(PIN_BUZZER, 1000, 200); // Toca uma nota de 1000 Hz por 200ms
+  delay(200);
+  tone(PIN_BUZZER, 1500, 200); // Toca uma nota de 1500 Hz por 200ms
+  delay(200);
+  tone(PIN_BUZZER, 2000, 200); // Toca uma nota de 2000 Hz por 200ms
+  delay(200);
 }
 
 void Sinalizacao::somTentativa(){
@@ -25,7 +89,8 @@ void Sinalizacao::somTentativa(){
 }
 
 void Sinalizacao::somFracasso(){
-  //Colocar aqui a implementação do som quando não for bem sucedida a consulta
+  tone(PIN_BUZZER, 500, 500);
+  tone(PIN_BUZZER, 500, 500); 
 }
 
 

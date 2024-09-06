@@ -25,7 +25,7 @@ PN532 nfc = PN532(pn532_i2c);
 
 byte RESET_PIN = 0;
 byte ACIONAMENTO_PIN = 13;
-byte BUZZER_PIN = 12;
+// byte BUZZER_PIN = 12;
 
 unsigned long dataIntevalPrevTime = 0;      // will store last time data was send
 unsigned long availableIntevalPrevTime = 0; // will store last time "available" was send
@@ -89,13 +89,12 @@ void atuador(const String payload) {
     digitalWrite(ACIONAMENTO_PIN, HIGH);
     delay(500);
     digitalWrite(ACIONAMENTO_PIN, LOW);
+    sinal.SinalizarAcessoPermitido();
     Serial.println("abertura realizada");
   }
   else{
     //Ativar buzzer
-    digitalWrite(BUZZER_PIN, HIGH);
-    delay(500);
-    digitalWrite(BUZZER_PIN, LOW);
+    sinal.SinalizarAcessoNegado();
     Serial.println("Sem autorização");
   }
 
