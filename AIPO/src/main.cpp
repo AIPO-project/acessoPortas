@@ -51,8 +51,6 @@ void iniciarPN532(){
   uint32_t versiondata = nfc.getFirmwareVersion();
   if ( !versiondata ) {
     pn532Fail=true;
-
-    Serial.println("Didn't find PN53x board");    
   }
   else{
     nfc.SAMConfig();
@@ -65,7 +63,6 @@ void iniciarPN532(){
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("what the hell");
   sinal.iniciar(); 
   pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
 //  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
@@ -122,13 +119,11 @@ bool readSensor() {
 
   uint32_t versiondata = nfc.getFirmwareVersion();
   if (! versiondata) {
-    //Serial.println("Didn't find PN53x board");
     pn532Fail=true;
     iniciarPN532();
   }
 
   if(pn532Fail){
-    //Serial.println("Erro");
     return false;
   }
 
