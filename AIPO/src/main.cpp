@@ -13,7 +13,7 @@
 #define DATA_INTERVAL 20000       // Intervalo para adquirir novos dados do sensor (milisegundos).
 // Os dados serão publidados depois de serem adquiridos valores equivalentes a janela do filtro
 #define AVAILABLE_INTERVAL 60000  // Intervalo para enviar sinais de available (milisegundos)
-#define READ_SENSOR_INTERVAL 5000  // Intervalo para fazer leituras consecutivas da chave (milisegundos)
+#define READ_SENSOR_INTERVAL 3000  // Intervalo para fazer leituras consecutivas da chave (milisegundos)
 
 #define JANELA_FILTRO 1         // Número de amostras do filtro para realizar a média
 
@@ -209,6 +209,7 @@ void loop()
   if((time_ms - sensorReadTimePrev >= READ_SENSOR_INTERVAL)){
     if( readSensor() && connected){
       //client.executeDelayed(1 * 100, sendChave);
+      sinal.SinalizarRequizicaoAcesso();
       sendChave();
       sensorReadTimePrev = time_ms;
     }

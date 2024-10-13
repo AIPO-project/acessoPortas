@@ -20,6 +20,7 @@ class Sinalizacao{
 
   void SinalizarAcessoPermitido();
   void SinalizarAcessoNegado();
+  inline void SinalizarRequizicaoAcesso() {ligarLedRgbAmarelo();}
 
   void somSucesso();
   void somTentativa();
