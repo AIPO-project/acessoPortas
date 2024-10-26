@@ -32,7 +32,7 @@ void ConfigHA::haDiscovery() {
       device["name"] = "Trancas das Portas";
   //      device["mf"] = "lennedy";
       device["mdl"] = "ESP8266";
-      device["sw"] = "0.06_pn532Test-01";
+      device["sw"] = "1.0_sinalizacao";
       device["hw"] = "0.1";
   //      device["cu"] = "http://192.168.1.226/config";  //web interface for device, with discovery toggle
       serializeJson(doc, buffer1);
