@@ -83,10 +83,13 @@ void setup()
 void atuador(const String payload) {
 
   if(payload == "UNLOCK"){
-    digitalWrite(ACIONAMENTO_PIN, HIGH);
-    delay(500);
-    digitalWrite(ACIONAMENTO_PIN, LOW);
     sinal.SinalizarAcessoPermitido();
+    for (int i = 0; i < 10; i++) {
+      digitalWrite(ACIONAMENTO_PIN, HIGH);
+      delay(100);
+      digitalWrite(ACIONAMENTO_PIN, LOW);
+      delay(50);
+    }
     Serial.println("abertura realizada");
   }
   else{
