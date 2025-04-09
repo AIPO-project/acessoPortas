@@ -1,5 +1,8 @@
 #include "Connect.h"
 
+
+const char NOME_CLIENTE [] = "porta_prototipo";
+
 EspMQTTClient client(
   SSD_WIFI,
   SENHA_WIFI,
