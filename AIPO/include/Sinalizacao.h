@@ -19,6 +19,7 @@ class Sinalizacao{
   void iniciar();
 
   void SinalizarAcessoPermitido();
+  void FinalizarAcessoPermitido();
   void SinalizarAcessoNegado();
   inline void SinalizarRequizicaoAcesso() {ligarLedRgbAmarelo();}
 

@@ -86,10 +86,11 @@ void atuador(const String payload) {
     sinal.SinalizarAcessoPermitido();
     for (int i = 0; i < 10; i++) {
       digitalWrite(ACIONAMENTO_PIN, HIGH);
-      delay(100);
+      delay(200);
       digitalWrite(ACIONAMENTO_PIN, LOW);
-      delay(50);
+      delay(100);
     }
+    sinal.FinalizarAcessoPermitido();
     Serial.println("abertura realizada");
   }
   else{

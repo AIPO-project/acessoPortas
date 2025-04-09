@@ -15,9 +15,9 @@ void Sinalizacao::iniciar(){
 void Sinalizacao::SinalizarAcessoPermitido(){
   ligarLedRgbVerde();
   somSucesso();
-  delay(1000);
+}
+void Sinalizacao::FinalizarAcessoPermitido(){
   desligarLedRgb();
-  
 }
 
 void Sinalizacao::SinalizarAcessoNegado(){
