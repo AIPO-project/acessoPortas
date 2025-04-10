@@ -62,7 +62,14 @@ void iniciarPN532(){
 
 void setup()
 {
+  char NOME_CLIENTE [32];
+  // char mac [32] = ;
+  strcpy(NOME_CLIENTE, "porta_");
+  strcat(NOME_CLIENTE, WiFi.macAddress().c_str());
+  client.setMqttClientName(NOME_CLIENTE);
   Serial.begin(115200);
+  Serial.println(client.getMqttClientName());
+  Serial.println(WiFi.macAddress());
   sinal.iniciar(); 
   pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
 //  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
