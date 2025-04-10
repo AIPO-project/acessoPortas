@@ -20,6 +20,7 @@
 //declaracao de objetos para uso na 
 PN532_I2C pn532_i2c(Wire);
 PN532 nfc = PN532(pn532_i2c);
+char NOME_CLIENTE [32];
 //PN532 nfc(pn532_i2c);
 //NfcAdapter nfc = NfcAdapter(pn532_i2c);
 
@@ -62,14 +63,13 @@ void iniciarPN532(){
 
 void setup()
 {
-  char NOME_CLIENTE [32];
   // char mac [32] = ;
   strcpy(NOME_CLIENTE, "porta_");
   strcat(NOME_CLIENTE, WiFi.macAddress().c_str());
   client.setMqttClientName(NOME_CLIENTE);
   Serial.begin(115200);
   Serial.println(client.getMqttClientName());
-  Serial.println(WiFi.macAddress());
+  // Serial.println(WiFi.macAddress());
   sinal.iniciar(); 
   pinMode(ACIONAMENTO_PIN, OUTPUT); // Sets the trigPin as an Output
 //  pinMode(BUZZER_PIN, OUTPUT); // Sets the echoPin as an Input  
