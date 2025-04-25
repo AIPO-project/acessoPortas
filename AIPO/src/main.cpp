@@ -88,7 +88,7 @@ void atuador(const String payload) {
       digitalWrite(ACIONAMENTO_PIN, HIGH);
       delay(200);
       digitalWrite(ACIONAMENTO_PIN, LOW);
-      delay(100);
+      delay(25);
     }
     sinal.FinalizarAcessoPermitido();
     Serial.println("abertura realizada");
