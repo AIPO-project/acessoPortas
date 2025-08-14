@@ -32,7 +32,7 @@ void ConfigHA::haDiscovery() {
       device["name"] = "Trancas das Portas";
   //      device["mf"] = "lennedy";
       device["mdl"] = "ESP8266";
-      device["sw"] = "1.0_sinalizacao";
+      device["sw"] = "1.0_mem_mecan";
       device["hw"] = "0.1";
       device["ip"] = WiFi.localIP().toString();
       device["cu"] = WiFi.localIP().toString();  //web interface for device, with discovery toggle
