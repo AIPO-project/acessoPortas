@@ -34,7 +34,8 @@ void ConfigHA::haDiscovery() {
       device["mdl"] = "ESP8266";
       device["sw"] = "1.0_sinalizacao";
       device["hw"] = "0.1";
-  //      device["cu"] = "http://192.168.1.226/config";  //web interface for device, with discovery toggle
+      device["ip"] = WiFi.localIP().toString();
+      device["cu"] = WiFi.localIP().toString();  //web interface for device, with discovery toggle
       serializeJson(doc, buffer1);
       //Publish discovery topic and payload (with retained flag)
       client.publish(topic, buffer1, true);
