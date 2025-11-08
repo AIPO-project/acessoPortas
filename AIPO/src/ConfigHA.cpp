@@ -29,13 +29,13 @@ void ConfigHA::haDiscovery() {
       doc["availability"][0]["topic"] = TOPIC_AVAILABLE;
       JsonObject device = doc.createNestedObject("device");
       device["ids"] = client.getMqttClientName();
-      device["name"] = "Trancas das Portas";
+      device["name"] = "Porta_";
   //      device["mf"] = "lennedy";
       device["mdl"] = "ESP8266";
       device["sw"] = "1.0_mem_mecan";
       device["hw"] = "0.1";
-      device["ip"] = WiFi.localIP().toString();
-      device["cu"] = WiFi.localIP().toString();  //web interface for device, with discovery toggle
+      // device["ip"] = WiFi.localIP().toString();
+      device["cu"] = "http://porta_D8BC38A90987.local";//WiFi.localIP().toString();  //web interface for device, with discovery toggle
       serializeJson(doc, buffer1);
       //Publish discovery topic and payload (with retained flag)
       client.publish(topic, buffer1, true);
